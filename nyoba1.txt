@@ -1,0 +1,5 @@
+rencana nyoba 1
+- python
+- java
+- machine learning
+- deep learning 
