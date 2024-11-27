@@ -3,3 +3,4 @@ rencana nyoba 1
 - java
 - machine learning
 - deep learning 
+- ingin menjadi polisi tidur
