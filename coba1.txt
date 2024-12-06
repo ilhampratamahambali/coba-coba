@@ -1,7 +1,215 @@
-hirup kadang dana kadang funy
-lalalalala
+#coba coba coba coba coba coba coba coba coba coba coba coba coba #coba coba coba coba coba coba coba coba coba coba coba coba coba #coba coba coba coba coba coba coba coba coba coba coba coba coba #coba coba coba coba coba coba coba coba coba coba coba coba coba #coba coba coba coba coba coba coba coba coba coba coba coba coba #coba coba coba coba coba coba coba coba coba coba coba coba coba #coba coba coba coba coba coba coba coba coba coba coba coba coba #coba coba coba coba coba coba coba coba coba coba coba coba coba #coba coba coba coba coba coba coba coba coba coba coba coba coba #coba coba coba
+=========================================================================================================================
 
-lilili
-lulululu
-lelelele
-lilililele
+-- Tabel Penduduk
+CREATE TABLE Penduduk (
+    NIK INT PRIMARY KEY,
+    NAMA VARCHAR(100),
+    Tanggal_Lahir DATE,
+    Tempat_Lahir VARCHAR(150),
+    Jenis_Kelamin CHAR(1),
+    Status_Pernikahan VARCHAR(20)
+);
+
+-- Tabel Kota
+CREATE TABLE Kota (
+    Kode_Kota CHAR(3) PRIMARY KEY,
+    Nama_Kota VARCHAR(50),
+    Nama_Provinsi VARCHAR(50),
+    Luas_Wilayah FLOAT,
+    Populasi INT
+);
+
+-- Tabel Jabatan
+CREATE TABLE Jabatan (
+    NIK INT,
+    Kode_Kota CHAR(3),
+    Tahun_Menjabat INT,
+    Tahun_Selesai INT,
+    PRIMARY KEY (NIK, Kode_Kota, Tahun_Menjabat),
+    FOREIGN KEY (NIK) REFERENCES Penduduk(NIK),
+    FOREIGN KEY (Kode_Kota) REFERENCES Kota(Kode_Kota)
+);
+
+-- Masukkan data ke tabel Penduduk
+INSERT INTO Penduduk (NIK, NAMA, Tanggal_Lahir, Tempat_Lahir, Jenis_Kelamin, Status_Pernikahan) VALUES
+(123, 'Andi Arjuna', '1970-02-01', 'Bandung, Jawa Barat', 'l', 'menikah'),
+(124, 'Mirnawati', '1970-02-03', 'Jakarta, DKI Jakarta', 'p', 'menikah'),
+(125, 'Joko Lelono', '1968-12-12', 'Surabaya, Jawa Timur', 'l', 'duda'),
+(126, 'Acep Surya', '1972-03-05', 'Tasikmalaya, Jawa Barat', 'l', 'menikah'),
+(127, 'Ronggolawe', '1980-10-08', 'Kediri, Jawa Timur', 'p', 'Belum menikah'),
+(128, 'Retno', '1988-11-01', 'Ponorogo, Jawa Timur', 'P', 'janda'),
+(129, 'Tassa', '1995-03-04', 'Palu, Sulawesi Tengah', 'P', 'Belum menikah');
+
+-- Masukkan data ke tabel Kota
+INSERT INTO Kota (Kode_Kota, Nama_Kota, Nama_Provinsi, Luas_Wilayah, Populasi) VALUES
+('BDG', 'Bandung', 'Jawa Barat', 167.7, 3700000),
+('TSK', 'Tasikmalaya', 'Jawa Barat', 171.61, 1800000),
+('BBR', 'Bandung Barat', 'Jawa Barat', 1305.77, 1700000),
+('CMH', 'Cimahi', 'Jawa Barat', 39.27, 601500),
+('MLG', 'Malang', 'Jawa Timur', 145.28, 874890),
+('SBY', 'Surabaya', 'Jawa Timur', 350.54, 3095026),
+('BMA', 'Bima', 'Nusa Tenggara Barat', 222.25, 163824);
+
+-- Masukkan data ke tabel Jabatan
+INSERT INTO Jabatan (NIK, Kode_Kota, Tahun_Menjabat, Tahun_Selesai) VALUES
+(123, 'BDG', 2000, 2005),
+(123, 'BDG', 2005, 2010),
+(124, 'TSK', 2001, 2006),
+(125, 'MLG', 2001, 2006),
+(125, 'SBY', 2006, 2011),
+(127, 'SBY', 2021, 2006),
+(128, 'CMH', 2023, NULL);
+
+
+
+-- TIPE DATA DAN DESAIN TABLE --
+-- Nama Tabel: RiwayatPendidikan --
+
+CREATE TABLE RiwayatPendidikan (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    NIK INT,
+    Jenjang VARCHAR(50),
+    Nama_Institusi VARCHAR(100),
+    Tahun_Lulus YEAR,
+    FOREIGN KEY (NIK) REFERENCES Penduduk(NIK)
+);
+
+Penjelasan Atribut
+ID (INT AUTO_INCREMENT PRIMARY KEY)
+
+Tipe Data: INT dengan AUTO_INCREMENT.
+Alasan: Digunakan sebagai primary key untuk identifikasi unik setiap riwayat pendidikan. AUTO_INCREMENT memastikan nilai bertambah otomatis untuk setiap entri baru.
+NIK (INT)
+
+Tipe Data: INT.
+Alasan: Sebagai foreign key yang menghubungkan data riwayat pendidikan dengan tabel Penduduk. Menggunakan tipe data yang sama dengan NIK di tabel Penduduk.
+Jenjang (VARCHAR(50))
+
+Tipe Data: VARCHAR(50).
+Alasan: Menyimpan tingkat pendidikan, seperti SD, SMP, SMA, S1, S2, S3. Panjang maksimum 50 karakter cukup untuk mencakup semua kemungkinan jenjang pendidikan.
+Nama_Institusi (VARCHAR(100))
+
+Tipe Data: VARCHAR(100).
+Alasan: Menyimpan nama institusi pendidikan. Panjang maksimum 100 karakter mencukupi untuk berbagai nama institusi, termasuk nama panjang.
+Tahun_Lulus (YEAR)
+
+Tipe Data: YEAR.
+Alasan: Menyimpan tahun kelulusan dalam format tahun (4 digit). Tipe YEAR optimal untuk data berbasis tahun dan menghemat ruang dibandingkan INT.
+
+
+-- KEGUNAAN INDEX --
+Index meningkatkan performa kueri dengan mempercepat pencarian data tanpa harus memindai seluruh tabel (full table scan). Index bekerja seperti daftar isi pada buku, membantu mengurangi operasi I/O disk.
+Keuntungan Index:
+Pencarian cepat: Mempercepat SELECT dengan kolom yang sering digunakan dalam WHERE atau ORDER BY.
+Efisiensi JOIN: Mempercepat pengambilan data antar tabel dengan foreign key.
+Aggregate Functions: Operasi seperti COUNT, MIN, atau MAX berjalan lebih efisien.
+Contoh:
+Index pada NIK (primary key):
+Pencarian SELECT * FROM Penduduk WHERE NIK = 125; lebih cepat.
+
+
+
+-- BAGIAN 2 --
+-- 4. tambahkan data penduduk baru 
+INSERT INTO Penduduk (NIK, NAMA, Tanggal_Lahir, Tempat_Lahir, Jenis_Kelamin, Status_Pernikahan) 
+VALUES (130, 'Nindya Sinaga', '1998-03-15', 'Medan, Sumatera Utara', 'p', 'Belum menikah');
+
+
+-- 5. UBAH ---
+UPDATE Penduduk
+SET Tempat_Lahir = 'Pamekasan, Jawa Timur'
+WHERE NIK = 128;
+
+DELETE FROM Penduduk
+WHERE NIK NOT IN (SELECT DISTINCT NIK FROM Jabatan);
+
+-- 6. tambah Kolom baru --
+ALTER TABLE Penduduk
+ADD Email VARCHAR(100);
+
+ALTER TABLE Kota
+MODIFY Luas_Wilayah DECIMAL(10,2);
+
+-- 7 menampilkan hanya kota kabupaten untuk tempat_lahir --
+SELECT 
+    NIK, 
+    NAMA, 
+    SUBSTRING_INDEX(Tempat_Lahir, ',', 1) AS Kota_Kabupaten
+FROM 
+    Penduduk;
+
+
+-- 8 tampilkan nama penduduk dan hari lahirnya tahun 80 an--
+SELECT 
+    NAMA, 
+    DAYNAME(Tanggal_Lahir) AS Hari_Lahir
+FROM 
+    Penduduk
+WHERE 
+    Tanggal_Lahir BETWEEN '1980-01-01' AND '1989-12-31';
+
+
+-- 9 tampilkan nama kota yang memiliki populasi lebih dari 1 juta dan pernah memiliki minimal 2 walikota/bupati yang berbeda --
+SELECT 
+    Kota.Nama_Kota
+FROM 
+    Kota
+JOIN 
+    Jabatan ON Kota.Kode_Kota = Jabatan.Kode_Kota
+GROUP BY 
+    Kota.Kode_Kota, Kota.Nama_Kota
+HAVING 
+    COUNT(DISTINCT Jabatan.NIK) >= 2
+    AND MAX(Kota.Populasi) > 1000000;
+
+
+-- 10 tampilkan nama provinsi dan jumlah walikota/bupati yang masih menjabat (tahun selesai is null) di provinsi tersebut
+SELECT 
+    Kota.Nama_Provinsi,
+    COUNT(Jabatan.NIK) AS Jumlah_Walikota_Bupati_Masih_Menjabat
+FROM 
+    Jabatan
+JOIN 
+    Kota ON Jabatan.Kode_Kota = Kota.Kode_Kota
+WHERE 
+    Jabatan.Tahun_Selesai IS NULL
+GROUP BY 
+    Kota.Nama_Provinsi;
+
+-- 11 tampilkan 5 penduduk termuda yang berjenis kelamin l dan status pernikahan 'menikah' tampilam nama, tanggal lahir, dan tempat lahir
+SELECT 
+    NAMA, 
+    Tanggal_Lahir, 
+    Tempat_Lahir
+FROM 
+    Penduduk
+WHERE 
+    Jenis_Kelamin = 'l' 
+    AND Status_Pernikahan = 'menikah'
+ORDER BY 
+    Tanggal_Lahir DESC
+LIMIT 5;
+
+
+-- 12 tampilkan nama provinsi yang memiliki rata-rata masa jabatan walikota/bupati lebih dari 8 tahun --
+SELECT 
+    k.Nama_Provinsi
+FROM 
+    Jabatan j
+JOIN 
+    Kota k ON j.Kode_Kota = k.Kode_Kota
+GROUP BY 
+    k.Nama_Provinsi
+HAVING 
+    AVG(YEAR(CURRENT_DATE) - j.Tahun_Menjabat) > 8;
+
+-- 13 Tampilkan nama_kota yang rata-rata usia walikota/bupati saat mulai menjabat kurang dari 40 tahun --
+SELECT k.Nama_Kota
+FROM jabatan j
+JOIN kota k ON j.Kode_Kota = k.Kode_Kota
+JOIN penduduk p ON j.NIK = p.NIK
+WHERE j.Tahun_Menjabat IS NOT NULL AND p.Tanggal_Lahir IS NOT NULL
+GROUP BY k.Nama_Kota
+HAVING AVG(TIMESTAMPDIFF(YEAR, p.Tanggal_Lahir, CONCAT(j.Tahun_Menjabat, '-01-01'))) < 40;
+
